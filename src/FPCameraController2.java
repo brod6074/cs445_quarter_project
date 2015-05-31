@@ -33,9 +33,9 @@ public class FPCameraController2 {
     public FPCameraController2(float x, float y, float z) {
         position = new Vector3f(x, y, z);
         lPosition = new Vector3f(x, y, z);
-        lPosition.x = 0;
+        lPosition.x = 50;
         lPosition.y = 15;
-        lPosition.z = 0;
+        lPosition.z = 50;
         yaw = 0;
         pitch = 0;
     }

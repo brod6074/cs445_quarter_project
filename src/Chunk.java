@@ -37,8 +37,6 @@ public class Chunk {
 
     // Method: Chunk
     // Purpose: Chuck constructor
-
-
     public Chunk(float startX, float startY, float startZ) {
         try{
             texture = TextureLoader.getTexture(
@@ -50,7 +48,7 @@ public class Chunk {
         this.startX = startX;
         this.startY = startY;
         this.startZ = startZ;
-        r = new Random();
+        r = new Random(System.currentTimeMillis());
 
         initializeBlocks();
         vboColorHandle = glGenBuffers();
@@ -68,15 +66,15 @@ public class Chunk {
         Random r = new Random((int)System.currentTimeMillis());
         int power = 5 + r.nextInt(9-5);
         System.out.println(power);
-        SimplexNoise noise = new SimplexNoise(/*(int)Math.pow((double)2,(double)power)*/128,0.250,(int)System.currentTimeMillis());
+        SimplexNoise noise = new SimplexNoise(256, 0.3, (int) System.currentTimeMillis());
 
         FloatBuffer vertexPositionData =
                 BufferUtils.createFloatBuffer(CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 6 * 12);
         FloatBuffer vertexColorData =
                 BufferUtils.createFloatBuffer(CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 6 * 12);
-
         FloatBuffer VertexTextureData =
-                    BufferUtils.createFloatBuffer((CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE)*6*12);
+                    BufferUtils.createFloatBuffer((CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
+
         int xResolution = CHUNK_SIZE;
         int yResolution = CHUNK_SIZE;
         int zResolution = CHUNK_SIZE;
@@ -84,31 +82,32 @@ public class Chunk {
         int YEnd = CHUNK_SIZE;
         int ZEnd = CHUNK_SIZE;
 
-
         float x = 0;
         float y = 0;
         float z = 0;
         float width = 0;
         float length = 0;
 
-
-
-
-        for ( x = 0; /*(x < width) &&*/ (x < CHUNK_SIZE); x++) {
-            for (z = 0; /*z < length &&*/ z < CHUNK_SIZE; z++) {
+        for ( x = 0; x < CHUNK_SIZE; x++) {
+            for (z = 0; z < CHUNK_SIZE; z++) {
 
                 int i = (int)(startX/2 + x *((XEnd -startX/2)/xResolution));
                 int k = (int)(startZ/2 +  z *((ZEnd-startZ/2)/zResolution));
+
                 float height = (startY/2 + (float)(100*noise.getNoise((int)x,(int)z))/2f * CUBE_LENGTH/2);
-                height = height + 15.0f;
-                //System.out.println(height);
+
+                height = height + 19.0f;
+//                double height = Math.abs(noise.getNoise((int) x, (int) z) * 100);
+
                 for (y = 0;(y < height) && (y < CHUNK_SIZE); y++) {
                     VertexTextureData.put(createTexCube(
                         (float) 0, (float) 0, blocks[(int)(x)][(int)(y)][(int)(z)]));
+
                     vertexPositionData.put(createCube(
                                       (float)(startX + x * CUBE_LENGTH),
                                     (float)(y * CUBE_LENGTH + (int)(CHUNK_SIZE * .8)),
                                     (float)(startZ + z * CUBE_LENGTH)));
+
                     vertexColorData.put(createCubeVertexCol(getCubeColor(
                             blocks[(int) x][(int) y][(int) z])));
                 }
@@ -127,13 +126,9 @@ public class Chunk {
         glBufferData(GL_ARRAY_BUFFER, vertexColorData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
-
         glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexTextureData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER,0);
-
-
     }
 
     // Method: createCube
@@ -203,12 +198,10 @@ public class Chunk {
 //                return new float[] {1, 1, 1};
 //        }
          return new float[] {1, 1, 1};
-
     }
 
     //Method: createTexCube
     //Purpose:
-
     private static float[] createTexCube(float x, float y, Block block){
         float offset = (1024f/16)/1024f;
         switch(block.getTypeID()){
@@ -448,40 +441,37 @@ public class Chunk {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
                     float f = r.nextFloat();
-                    //System.out.println(f);
-                    if(y <= 5){
+                    if(y <= 4){
                         blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
                     }
-                    else if( y > 5 && y <= 10){
+                    else if( y > 4 && y <= 8){
                         blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
                     }
-                    else if( y > 10 && y <=15){
+                    else if( y > 8 && y <= 12){
                         blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
                     }
-                    else if ( y > 15 && y <= 20){
+                    else if ( y > 12 && y <= 16){
                         blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
                     }
-                    else if(y > 20 && y <= 27){
-                        if( x <= 15){
+                    else if (y > 16 && y <= 25) {
+                        if (x <= 15 && z <= 15) {
                             blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
                         }
-                        else if( x > 15 && x <= 25){
-                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
-                        }
-                        else if( x > 25 && x <= 30){
-                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-                        }
-                    }
-                    else if( y == 28){
-                        if( x <= 20){
+                        else if ( ((x > 2) && (x <= 25)) && ((z > 2) && (z < 25)) ) {
                             blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
                         }
-                        else if ( x > 20 && x <=30){
-                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                        else {
+                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
                         }
                     }
-                    else if( y > 28 && y <=30){
-                        blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                    else {
+                        blocks[x][y][z] = new Block((Block.BlockType.BlockType_Grass));
+//                        if( x < 15){
+//                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
+//                        }
+//                        else {
+//                            blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+//                        }
                     }
                 }
             }
