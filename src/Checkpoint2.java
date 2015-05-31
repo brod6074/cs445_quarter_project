@@ -7,18 +7,24 @@
 // Assignment:  Check Point 2
 // Date last modified: 5/18/2015
 //
-// Purpose: Client class for Check Point 2 project
+// Purpose:
 // --------------------------------------------------------
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
+import java.nio.FloatBuffer;
+
 public class Checkpoint2 {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
+    private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
+
     private FPCameraController2 fp;
 
     // Method: Checkpoint2
@@ -34,6 +40,17 @@ public class Checkpoint2 {
         Display.setFullscreen(false);
         Display.setTitle("Check Point 2");
         Display.create();
+    }
+
+
+    //Method: initLightArrays
+    //puprose: method to initialize lighting
+
+    private void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
     }
 
     // Method: initGL
@@ -55,6 +72,14 @@ public class Checkpoint2 {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
+
+        initLightArrays();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets our light’s position
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);//sets our specular light
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);//sets our diffuse light
+        glLight(GL_LIGHT0, GL_AMBIENT, whiteLight);//sets our ambient light
+        glEnable(GL_LIGHTING);//enables our lighting
+        glEnable(GL_LIGHT0);//enables light0
     }
 
     // Method: start
