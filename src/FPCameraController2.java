@@ -4,23 +4,23 @@
 // Team:        SOF
 // Class:       CS 445
 //
-// Assignment:  Check Point 2
-// Date last modified: 5/18/2015
+// Assignment:  Final Project
+// Date last modified: 5/31/2015
 //
 // Purpose: Creates a camera for 3D graphics viewing.
 // Implemented from code in course slides.
 // --------------------------------------------------------
+
+import java.nio.FloatBuffer;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.BufferUtils;
 
-import java.nio.FloatBuffer;
-
 import static org.lwjgl.opengl.GL11.*;
 
-// Class: FPCameraController
+// Class: FPCameraController2
 public class FPCameraController2 {
     private Vector3f position;
     private Vector3f lPosition;
@@ -28,7 +28,7 @@ public class FPCameraController2 {
     private float pitch;            // x-axis rotation of camera
     private Chunk chunk;
 
-    // Method: FPCameraController
+    // Method: FPCameraController2
     // Purpose: Constructor
     public FPCameraController2(float x, float y, float z) {
         position = new Vector3f(x, y, z);

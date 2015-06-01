@@ -4,23 +4,21 @@
 // Team:        SOF
 // Class:       CS 445
 //
-// Assignment:  Check Point 2
-// Date last modified: 5/18/2015
+// Assignment:  Final Project
+// Date last modified: 5/31/2015
 //
-// Purpose:
+// Purpose: Represents a chunk to be drawn
 // --------------------------------------------------------
 
 import org.lwjgl.BufferUtils;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-
 import java.nio.FloatBuffer;
 import java.util.Random;
-
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
 
 public class Chunk {
     static final int CHUNK_SIZE = 30;

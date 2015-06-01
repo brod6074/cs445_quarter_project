@@ -1,3 +1,7 @@
+/*
+    SimplexNoise class provided by instructor
+ */
+
 import java.util.Random;
 
 public class SimplexNoise {

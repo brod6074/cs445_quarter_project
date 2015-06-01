@@ -4,7 +4,7 @@
 // Team:        SOF
 // Class:       CS 445
 //
-// Assignment:  Check Point 1
+// Assignment:  Final Project
 // Date last modified: 5/4/2015
 //
 // Purpose: Holds a 3D set of coordinates.

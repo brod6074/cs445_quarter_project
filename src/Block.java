@@ -4,7 +4,7 @@
 // Team:        SOF
 // Class:       CS 445
 //
-// Assignment:  Check Point 2
+// Assignment:  Final Project
 // Date last modified: 5/18/2015
 //
 // Purpose: Represents a Block to be drawn

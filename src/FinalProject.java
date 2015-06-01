@@ -7,7 +7,7 @@
 // Assignment:  Final project
 // Date last modified: 6/01/2015
 //
-// Purpose:
+// Purpose: The main class that runs the final project.
 // --------------------------------------------------------
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -27,7 +27,7 @@ public class FinalProject {
 
     private FPCameraController2 fp;
 
-    // Method: Checkpoint2
+    // Method: FinalProject
     // Purpose: Default constructor. Initializes camera.
     public FinalProject() {
         fp = new FPCameraController2(0, 0, 0);
@@ -45,7 +45,6 @@ public class FinalProject {
 
     //Method: initLightArrays
     //puprose: method to initialize lighting
-
     private void initLightArrays() {
         lightPosition = BufferUtils.createFloatBuffer(4);
         lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
@@ -97,7 +96,7 @@ public class FinalProject {
     // Method: main
     // Purpose: Starting point of program
     public static void main(String[] args) {
-        Checkpoint2 cp = new Checkpoint2();
-        cp.start();
+       FinalProject fp = new FinalProject();
+        fp.start();
     }
 }

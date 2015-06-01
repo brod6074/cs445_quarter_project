@@ -1,9 +1,8 @@
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+/*
+    SimplexNoise_octave class provided by instructor
+ */
+
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 
 /*
